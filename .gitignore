@@ -1,0 +1,6 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+clement_ong_cv_190318.pdf
+.DS_Store

@@ -1,0 +1,244 @@
+---
+---
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Malaysia Live Twitter Feed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+  <style>
+    a {
+      text-decoration: none !important
+    }
+
+    a:hover {
+      text-decoration: underline !important
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero is-medium is-primary is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Malaysia Live Twitter Feed
+        </h1>
+        <h2 class="subtitle">
+          What is happening around each states in Malaysia right now.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container-fluid">
+      <div class="columns">
+        <div class="column">
+
+          <div id='johor' style="margin:0;padding:0">
+          </div>
+
+          <div id='kedah' style="margin:0;padding:0">
+          </div>
+
+          <div id='kelantan' style="margin:0;padding:0">
+          </div>
+
+          <div id='melaka' style="margin:0;padding:0">
+          </div>
+        </div>
+        <div class="column">
+
+          <div id='penang' style="margin:0;padding:0">
+          </div>
+
+          <div id='terengganu' style="margin:0;padding:0">
+          </div>
+
+          <div id='selangor' style="margin:0;padding:0">
+          </div>
+
+          <div id='labuan' style="margin:0;padding:0">
+          </div>
+        </div>
+        <div class="column">
+
+          <div id='perak' style="margin:0;padding:0">
+          </div>
+
+          <div id='perlis' style="margin:0;padding:0">
+          </div>
+
+          <div id='sabah' style="margin:0;padding:0">
+          </div>
+
+          <div id='sarawak' style="margin:0;padding:0">
+          </div>
+        </div>
+        <div class="column">
+
+
+          <div id='kualalumpur' style="margin:0;padding:0">
+          </div>
+
+          <div id='negerisembilan' style="margin:0;padding:0">
+          </div>
+
+          <div id='pahang' style="margin:0;padding:0">
+          </div>
+
+          <div id='putrajaya' style="margin:0;padding:0">
+          </div>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-one-third">
+          <div class="title" id='counter'>
+            Upcoming tweets
+          </div>
+          <ul id="list"></ul>
+        </div>
+        <div class="column">
+        </div>
+
+
+      </div>
+  </section>
+
+
+
+  <script>
+    // var counter = 0
+
+    function alot(div, msg, duration, x, y) {
+      // console.log('tweet from ' + div)
+      var a = JSON.parse(msg)
+      document.getElementById(div).innerHTML = "";
+      var ba = document.createElement("br");
+      var el = document.createElement("div");
+      // el.setAttribute("style", "position:absolute;top:" + y + "px;left:" + x + "px;max-width:250px");
+      el.setAttribute("class", "notification is-info");
+      el.innerHTML = '<p class="title" style="margin-bottom:8px">' + div + '</p><a href="' + a[1] +
+        '">' + a[2] +
+        '</a><br><a class="button is-link" style="float:right" href="https://twitter.com/' + a[0] + '">@' + a[0] +
+        '</a>'
+      setTimeout(function () {
+        if (el.parentNode !== null) {
+          el.parentNode.removeChild(ba);
+          el.parentNode.removeChild(el);
+        }
+      }, duration);
+      document.getElementById(div).appendChild(el);
+      document.getElementById(div).appendChild(ba);
+    }
+
+    firebase.initializeApp({
+      apiKey: "AIzaSyBXNHETHjwZ3lV70lcZawWWDe_KPOiIPpg",
+      authDomain: "nodedemo2.firebaseapp.com",
+      databaseURL: "https://nodedemo2.firebaseio.com",
+      storageBucket: "nodedemo2.appspot.com",
+    });
+
+
+    let ul = document.getElementById('messages');
+
+    function pop(div, msg, duration, x, y) {
+      var a = JSON.parse(msg)
+      document.getElementById(div).innerHTML = "";
+      var el = document.createElement("div");
+      // el.setAttribute("style", "position:absolute;top:" + y + "px;left:" + x + "px;max-width:250px");
+      el.setAttribute("class", "notification is-info");
+      el.innerHTML = '<a href="https://twitter.com/' + a[0] + '">@' + a[0] + '</a><a href="' + a[1] + '">' + a[2] +
+        '</a>'
+      setTimeout(function () {
+        if (el.parentNode !== null)
+          el.parentNode.removeChild(el);
+      }, duration);
+      document.getElementById(div).appendChild(el);
+    }
+
+
+
+    firebase.database().ref('/bb/').on('value', function (snapshot) {
+      // counter++
+      // document.getElementById('counter').innerHTML = "Upcoming tweets... | Tweets shown: " + counter
+
+      document.getElementById('list').innerHTML = "";
+      var bon = (snapshot.val().mainar) || '';
+      var arr = JSON.parse(bon)
+
+      var msglc = arr[0].toLowerCase()
+      var msga = arr[0]
+
+      //show the infini scrolling list
+      // for (var i = arr.length - 1; i > -1; i--) {
+      for (var i = 1; i < arr.length; i++) {
+        var ab = JSON.parse(arr[i])
+        var node = document.createElement("LI"); // Create a <li> node
+        node.setAttribute("class", "notification is-warning");
+        var textnode = document.createTextNode(i + '. ' + ab[0]); // Create a text node
+        node.appendChild(textnode); // Append the text to <li>
+        document.getElementById("list").appendChild(node); // Append <li> to <ul> with id="myList"
+      }
+
+
+      if (msglc.includes('perak')) {
+        alot('perak', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('perlis')) {
+        alot('perlis', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('sabah') || msglc.includes('kinabalu')) {
+        alot('sabah', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('sarawak')) {
+        alot('sarawak', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('kuala lumpur')) {
+        alot('kualalumpur', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('negeri sembilan')) {
+        alot('negerisembilan', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('pahang')) {
+        alot('pahang', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('johor')) {
+        alot('johor', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('kedah')) {
+        alot('kedah', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('kelantan')) {
+        alot('kelantan', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('melaka')) {
+        alot('melaka', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('penang')) {
+        alot('penang', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('terengganu')) {
+        alot('terengganu', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('selangor')) {
+        alot('selangor', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('labuan')) {
+        alot('labuan', msga, 10000, 400, 200)
+      }
+      if (msglc.includes('putrajaya')) {
+        alot('putrajaya', msga, 10000, 400, 200)
+      }
+
+
+    })
+  </script>
+
+
+</body>
+
+</html>

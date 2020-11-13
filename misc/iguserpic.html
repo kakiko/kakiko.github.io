@@ -1,0 +1,221 @@
+---
+---
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram Profile Picture Analyser</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet'
+    type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <style>
+    body,
+    button,
+    input,
+    select,
+    textarea {
+      font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .card,
+    #buttonl {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    #inputa {
+      width: 300px;
+      margin: 10px auto;
+    }
+
+    .callout {
+      border-bottom: 0
+    }
+
+    #result {
+      display: none
+    }
+
+    /* #lab {
+
+      width: 300px;
+      margin: 0 auto;
+
+    } */
+  </style>
+</head>
+
+<body>
+
+
+
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-2195009-2', 'auto');
+    ga('send', 'pageview');
+
+    ga('create', 'UA-2195009-27', 'auto', {
+      name: "foundation"
+    });
+    ga('foundation.send', 'pageview');
+  </script>
+
+
+  <div class="callout large">
+    <div class="row column text-center">
+      <h1>Instagram Profile Picture Analyser</h1>
+      <p class="lead">Come find out what your Instagram profile picture says about you.</p>
+
+      <form>
+        <label id='lab'>Enter your instagram username without @.
+          <input id='inputa' type="text" aria-describedby="exampleHelpText">
+        </label>
+        <p class="help-text" id="exampleHelpText">e.g. therock</p>
+        <button id='buttonl' onclick="onclicka();return false;" class="button large">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <article id='result' class="grid-container">
+    <div class="grid-x grid-margin-x">
+      <div class="medium-3 cell">
+        <div class="card">
+          <div class="card-section">
+            <h4>I saw..</h4>
+            <p id='labell'></p>
+          </div>
+        </div>
+      </div>
+      <div class="medium-3 cell">
+        <div class="card">
+          <div class="card-section">
+            <h4>Web says its..</h4>
+            <p id='webl'></p>
+          </div>
+        </div>
+      </div>
+      <div class="medium-3 cell">
+        <div class="card">
+          <div class="card-section">
+            <h4>It looks like..</h4>
+            <img id='similarl' class="thumbnail" src="https://placehold.it/200x150">
+          </div>
+        </div>
+      </div>
+      <div class="medium-3 cell">
+        <div class="card">
+          <div class="card-section">
+            <h4>I guess..</h4>
+            <p id='guessl'></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </article>
+  <article style='margin-bottom:20px' class="grid-container">
+    <div class="row column">
+      <ul class="menu">
+        <li><a href="#!">2019</a></li>
+        <li><a href="#!">|</a></li>
+        <li><a href="https://8gb.github.io">github</a></li>
+        <li><a href="https://cl.mt">cl.mt</a></li>
+      </ul>
+    </div>
+  </article>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+  <script>
+    // $(document).foundation();
+
+
+    function onclicka() {
+      //clear prior values
+      document.getElementById("labell").innerHTML = '';
+      var ima = document.getElementById("similarl");
+      ima.src = 'https://placehold.it/150x150'
+
+      document.getElementById("guessl").innerHTML = '';
+      document.getElementById("webl").innerHTML = '';
+
+      $("#result").css("display", "none");
+      $("#buttonl").text('Loading...');
+      var xs = document.getElementById("inputa").value;
+      $.get("https://apig.lemon.now.sh/ig/" + xs, function (data, status) {
+        if (status === 'success') {
+          $("#buttonl").text('Submit');
+          $("#result").css("display", "block");
+          // console.log("Data: " + data + "\nStatus: " + status);
+          var x = JSON.parse(data)
+          var label = x.responses[0].labelAnnotations
+          var labelp = ''
+          for (var i = 0; i < label.length; i++) {
+            labelp += '<div class="card"><div class="card-section"><p>' + label[i].description +
+              '</p></div></div>'
+          }
+          document.getElementById("labell").innerHTML = labelp;
+
+          var web = x.responses[0].webDetection.webEntities
+          // console.log(x.responses[0].webDetection.visuallySimilarImages)
+          if (typeof x.responses[0].webDetection.visuallySimilarImages[0] !== 'undefined')
+            var similar = x.responses[0].webDetection.visuallySimilarImages[0].url
+          else
+            var similar = 'https://placehold.it/150x150'
+
+          var guess = x.responses[0].webDetection.bestGuessLabels[0].label
+
+          var image = document.getElementById("similarl");
+          image.src = similar
+
+          document.getElementById("guessl").innerHTML = guess + '?';
+
+          var webp = ''
+          for (var i = 0; i < web.length; i++) {
+            webp += '<div class="card"><div class="card-section"><p>' + web[i].description + '</p></div></div>'
+          }
+          document.getElementById("webl").innerHTML = webp;
+        } else {
+          alert('not working')
+        }
+
+      }).fail(function () {
+        $("#buttonl").text('Submit');
+        alert("error: invalid username, or try again.");
+      })
+
+      // $.ajax({
+      //   headers: {
+      //     "Accept": "application/json"
+      //   },
+      //   type: 'GET',
+      //   url: 'https://apig.lemon.now.sh/ig/' + xs,
+      //   crossDomain: true,
+      //   beforeSend: function (xhr) {
+      //     xhr.withCredentials = true;
+      //   },
+      //   success: function (data, textStatus, request) {
+      //     console.log(data);
+      //   }
+      // })
+    }
+  </script>
+</body>
+
+</html>

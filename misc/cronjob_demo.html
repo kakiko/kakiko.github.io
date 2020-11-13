@@ -1,0 +1,84 @@
+---
+---
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Firebase Realtime Database (nodedemo)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+</head>
+
+<body>
+  <section class="hero is-primary is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Content update every 30 minutes.
+        </h1>
+        <h2 class="subtitle">
+          firebase realtime database, 3rd party cronjob service, nodejs RESTful API from firebase function.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <div class="px-5 columns">
+      <div class="column">
+        <hr>
+        <div id="list"></div>
+      </div>
+      <div class="column">
+        <hr>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">cronjob hits every 30 minute!</div>
+            resources:<br>
+            https://cron-job.org<br>
+            https://firebase.google.com/docs/database/web/save-data#write_data_offline<br>
+            https://github.com/dandv/firebase-db-web-offline<br>
+            https://dandv.github.io/firebase-db-web-offline/<br>
+          </div>
+        </div>
+        <div class='mt-5 max-w-sm rounded overflow-hidden shadow-lg'><div class="px-6 py-4">build by cl.mt</div></div>
+      </div>
+    </div>
+
+
+
+  </div>
+</body>
+
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyBXNHETHjwZ3lV70lcZawWWDe_KPOiIPpg",
+    authDomain: "nodedemo2.firebaseapp.com",
+    databaseURL: "https://nodedemo2.firebaseio.com",
+    storageBucket: "nodedemo2.appspot.com",
+  });
+
+
+  let ul = document.getElementById('messages');
+
+  firebase.database().ref('/aa/').on('value', function (snapshot) {
+    document.getElementById('list').innerHTML = "";
+    var bon = (snapshot.val().arr) || '';
+    // console.log(bon)
+    var arr = JSON.parse(bon)
+    for (var i = arr.length - 1; i > -1; i--) {
+      var node = document.createElement("div"); // Create a <li> node
+      node.setAttribute("class",
+        "bg-teal-lightest border-t-4 border-teal rounded-b text-teal-darkest px-4 py-3 shadow-md");
+      var textnode = document.createTextNode('Server running fine on ' + arr[i]); // Create a text node
+      node.appendChild(textnode); // Append the text to <li>
+      document.getElementById("list").appendChild(node); // Append <li> to <ul> with id="myList"
+          document.getElementById("list").append(document.createElement("br"))
+    }
+  })
+</script>
+
+</html>

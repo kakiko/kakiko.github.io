@@ -1,0 +1,249 @@
+---
+permalink: chance
+---
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chance by 8gb</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title">
+                        Chance
+                    </h1>
+                    <p class="subtitle">
+                        Calculate probability!
+                    </p>
+                    <div class="field">
+                        <div class="columns is-mobile">
+                            <div class="column">
+                                <label class="label">Score(s)</label>
+                                <input class="input" type="number" value=5 id="score" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <label class="label">Attempt(s)</label>
+                                <input class="input" type="number" value=12 id="attempt" placeholder="Text input">
+                            </div>
+                        </div>
+
+                        <label class="label">Probability of scoring (%)</label>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="100.00" value="50" class="slider" id="myRange">
+                        </div>
+                        <div class="control">
+                            <input class="input" type="number" value=50 id="pscore" placeholder="Text input">
+                        </div>
+                        <div class="control">
+                            <label class="label">Decimal</label>
+                            <input class="input" type="number" value=2 id="decimal" placeholder="Text input">
+                        </div>
+                        <br>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-link" onclick=lol()>Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-8">
+                    <div class="chart-container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div id="log">If I have a 10% chance of winning a lottery, does buying 10 lottery ticket give me
+                        100% chance of winning at least once? Or it remains 10%? <br><br> Assuming the tickets are
+                        independent from each other, and the tickets pool are large enough to maintain the 10%
+                        probability.</div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+</body>
+
+
+<script>
+    //https://math.stackexchange.com/questions/624537/chances-of-winning-a-25-with-two-events
+    //https://www.khanacademy.org/math/precalculus/prob-comb/prob-combinatorics-precalc/v/getting-exactly-two-heads-combinatorics
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("pscore");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function () {
+        document.getElementById("pscore").value = this.value;
+    }
+    output.oninput = function () {
+        document.getElementById("myRange").value = this.value;
+    }
+    var myChart;
+
+    function lol() {
+
+        var z = document.getElementById("decimal").value
+        var y = document.getElementById("score").value
+        var attempt = document.getElementById("attempt").value
+        var x = document.getElementById("pscore").value
+
+
+        var DECIMAL = parseInt(z)
+        var score = parseInt(y)
+        var pscore = parseFloat(x) / 100
+        var pmiss = 1 - pscore
+
+        if (score > attempt) {
+            alert("scores cannot larger than attempts")
+            return
+        }
+        if (score < 0) {
+            alert("scores cannot be negative")
+            return
+        }
+        document.getElementById('log').innerHTML = "";
+
+        function prob(s, a, p) {
+            var pm = 1 - p
+            var aa = Math.pow(p, s)
+            var b = Math.pow(pm, (a - s))
+            var c = combi(a, s)
+            var t = ' % chance of exactly ' + s + ' score(s) in ' + a + ' attempts.'
+            var answer = ro(aa * b * c * 100, DECIMAL)
+            return answer + t
+        }
+
+        function an(s, a, p) {
+            var pm = 1 - p
+            var aa = Math.pow(p, s)
+            var b = Math.pow(pm, (a - s))
+            var c = combi(a, s)
+            var answer = ro(aa * b * c * 100, DECIMAL)
+            return answer
+        }
+
+        function probv(s, a, p) {
+            var pm = 1 - p
+            var aa = Math.pow(p, s)
+            var b = Math.pow(pm, (a - s))
+            var c = combi(a, s)
+            return aa * b * c * 100
+        }
+
+        logg(prob(score, attempt, pscore))
+        var text = ''
+
+        var total = 0
+        var arr = [
+            [],
+            []
+        ]
+        //complete run
+        for (var i = 1; i <= attempt; i++) {
+            var ans = probv(i, attempt, pscore)
+            var val = ans
+            // logg(prob(i, attempt, pscore))
+            arr[0].push(an(i, attempt, pscore))
+            arr[1].push(an(i, attempt, pscore) + '% chance of exactly ' + i + ' scores in ' + attempt + ' attempts')
+        }
+        //user define range
+        for (var i = score; i <= attempt; i++) {
+            var ans = probv(i, attempt, pscore)
+            var val = ans
+            // text = text + ro(ans, DECIMAL) + ' + '
+            total = total + ans
+        }
+
+        logg('-----')
+        logg(text)
+        logg(ro(total, DECIMAL) + '% chance of at least ' + score + ' scores in ' + attempt + ' attempts')
+        logg('===')
+        var tt = ' % chance of at least 1 score in ' + attempt + ' attempts.'
+        var bb = (1 - Math.pow(pmiss, attempt)) * 100
+        var bh = ro(bb, DECIMAL)
+        var la = 100 - bh
+        logg(bh + tt)
+
+        var kk = ' % chance of exactly 0 score in ' + attempt + ' attempts.'
+        logg(ro(la, DECIMAL) + kk)
+
+        if (myChart)
+            myChart.destroy();
+        var ctx = document.getElementById('myChart').getContext('2d');
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: arr[1],
+                datasets: [{
+                    data: arr[0],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        }
+                    }]
+                }
+            }
+        });
+
+    }
+
+
+
+    function logg(x) {
+        document.getElementById('log').innerHTML += '<br>' + x
+    }
+
+    function ro(num, dec) {
+
+        if ((typeof num !== 'number') || (typeof dec !== 'number'))
+            return false;
+
+        var num_sign = num >= 0 ? 1 : -1;
+
+        return (Math.round((num * Math.pow(10, dec)) + (num_sign * 0.0001)) / Math.pow(10, dec)).toFixed(dec);
+    }
+
+
+
+    function combi(n, r) {
+        if (n == r) {
+            return 1;
+        } else {
+            r = (r < n - r) ? n - r : r;
+            return product_Range(r + 1, n) / product_Range(1, n - r);
+        }
+    }
+
+    function product_Range(a, b) {
+        var prd = a,
+            i = a;
+
+        while (i++ < b) {
+            prd *= i;
+        }
+        return prd;
+    }
+</script>
+
+</html>
