@@ -11,7 +11,7 @@ This is how we intergrate Netlify CMS into an existing jekyll site. We assume we
 
 <p>3. Create a folder called "admin" in your jekyll directory, then create two files inside the "admin" folder, namely "index.html" and "config.yml".</p>
 
-<p>4. Get the index.html code from https://www.netlifycms.org/docs/add-to-your-site/.</p>
+<p>4. Get the index.html code from <a href="https://www.netlifycms.org/docs/add-to-your-site/">https://www.netlifycms.org/docs/add-to-your-site/.</a></p>
 
 <p>5. For the config.yml, paste the code below.</p>
 
@@ -36,7 +36,7 @@ This is how we intergrate Netlify CMS into an existing jekyll site. We assume we
           - {label: "Body", name: "body", widget: "markdown"}
 
 
-
+<br/>
 A few things to note here, title label is extremely important, without it the CMS won't work. Permalink label is there because when you change the title, the permalink won't automatically update itself, hence the need to include it. Date label is there for convenient editing.
 
 

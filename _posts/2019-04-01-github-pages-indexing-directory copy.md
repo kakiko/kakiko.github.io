@@ -48,8 +48,8 @@ So next time when u git push the repo, GitHub's Jekyll builder will automaticall
 ### Second
 You can't track other file format aside from markdown, HTML and CSS, I’m not sure about it though.
 
+<br/>
+<br/>
 
-
-<br><br><br>
 > Useful reference: https://jekyllrb.com/docs/variables/
 

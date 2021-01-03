@@ -16,12 +16,10 @@ canvas {
 }
 
 a:link {
-  color: white;
 }
 
 /* visited link */
 a:visited {
-  color: #eee;
 }
 
 /* mouse over link */
@@ -37,7 +35,7 @@ a:hover {
 .content h3,
 .content h4,
 .content h5 {
-  color: #ddd !important;
+  /* color: #ddd !important; */
 }
 
 .tile .notification .post-link {
@@ -79,11 +77,12 @@ a:hover {
 
 #heady {
   font-family: "Shadows Into Light", cursive;
-  font-size: 48px;
   font-weight: bold;
   font-style: normal;
   margin-bottom: 50px;
+  color: #444;
 }
+
 @supports (-webkit-touch-callout: none) {
   /* CSS specific to iOS devices */ 
   #heady {
@@ -93,7 +92,16 @@ a:hover {
 }
 
 body {
+  background-color: white;
+  color: #222;
+}
+
+.dark-mode {
   background-color: #222;
+  color: #ddd;
+}
+
+.dark-mode #heady {
   color: #ddd;
 }
 
@@ -140,15 +148,15 @@ body {
   opacity: 1;
   transition-duration: 180ms;
   -webkit-transition-duration: 180ms;
-  -webkit-transform: translate3d(0, -300px, 0);
-  transform: translate3d(0, -300px, 0);
+  -webkit-transform: translate3d(0, -240px, 0);
+  transform: translate3d(0, -240px, 0);
   pointer-events: all;
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   #heady {
-    font-size: 60px;
+    /* font-size: 60px; */
   }
 
   .menu-item {
@@ -190,7 +198,7 @@ body {
     height: 80px;
     text-align: center;
     box-sizing: border-box;
-    font-size: 26px;
+    /* font-size: 26px; */
   }
 }
 /* Medium devices (landscape tablets, 768px and up) */

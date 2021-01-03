@@ -16,9 +16,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1"> {%- seo -%}
-    <link rel="stylesheet" href="{{ "/assets/main.css " | relative_url }}"> {%- feed_meta -%} {%- if
-    jekyll.environment
-    == 'production' and site.google_analytics -%} {%- include google-analytics.html -%} {%- endif -%}
+    <link rel="stylesheet" href="{{ " /assets/main.css " | relative_url }}"> {%- feed_meta -%} {%- if jekyll.environment == 'production' and site.google_analytics -%} {%- include google-analytics.html -%} {%- endif -%}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
@@ -32,20 +30,6 @@
                 <h1 id='heady'>Clement Ong</h1>
             </a>
         </div>
-        <nav class="menu" style='z-index: 99999'>
-            <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-            <label class="menu-open-button" for="menu-open">
-                <span class="lines line-1"></span>
-                <span class="lines line-2"></span>
-                <span class="lines line-3"></span>
-            </label>
-            <div class="box menu-item">
-                <!-- <aclass="button is-large is-block is-primary" href='/'>home</a> -->
-                <a style='margin-top: 0' class="button is-large is-block is-dark" href='/works'>works</a>
-                <a class="button is-large is-block is-dark" href='/design'>design</a>
-                <a class="button is-large is-block is-dark" href='/blog'>blog</a>
-            </div>
-        </nav>
         <main>
             <div style='width:600px'></div>
 
@@ -53,8 +37,23 @@
 
         </main>
         <br/>
+        <hr/>
+        <span><a href="/projects">projects</a> | <a href="/design">design</a>  | <a href="/blog">blog</a> </span><br/>
         <span class="post-meta">{{ site.year }}</span>
     </div>
+    <script>
+        let onpageLoad = localStorage.getItem("theme") || "";
+        let element = document.body;
+        element.classList.add(onpageLoad);
+        document.getElementById("theme").textContent =
+            localStorage.getItem("theme") || "light";
+
+
+        function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+    </script>
     <!-- <canvas id="c"></canvas> -->
 </body>
 <!-- <script src="/int.js"></script> -->

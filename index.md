@@ -4,10 +4,6 @@
 layout: home
 ---
 
- - JS, Java, Swift
- - Jenkins, Github
+Hi visitor. I code webapp and mobile app. Come checkout my [GitHub](https://github.com/8gb). If you want to reach me, I have [Twitter](https://twitter.com/ongclmt) and [Linkedin](https://linkedin.com/in/ongclmt). If you prefer email, please sent it to hi at cl dot mt.
 
-[twitter](https://twitter.com/ongclmt)  
-[github](https://github.com/8gb)  
-[linkedin](https://linkedin.com/in/ongclmt)  
-[hi@cl.mt](mailto:hi@cl.mt)  
+
