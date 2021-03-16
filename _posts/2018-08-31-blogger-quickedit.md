@@ -42,7 +42,4 @@ If you want to compiled the javascript code yourself into a booklet, below is th
 </script>
 <a class="" onclick="onclicka()">Click me</a>
 ```
-
-
-
-
+---

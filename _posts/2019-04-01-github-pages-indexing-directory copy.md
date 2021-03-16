@@ -9,12 +9,14 @@ If you have a bunch of html files in a repo, if would be useful if the index pag
 However it is troublesome to edit home page (index.html) manually each time you make changes to one of the html files.
 
 ## Guide
-So here is a guide to automate it. It uses existing Jekyll only, no other dependencies.
+So here is a guide to automate it. It uses existing Jekyll, no other dependencies.
 
+<p>
 1. Enable GitHub page and choose a theme. Doing so will generate a _config.yml on your directory.
-
+</p>
+<p>
 2. Git pull it to sync the files. Now add the following code to index.md or index.html.
-
+</p>
 ```xml
 {% raw %}
    {% assign doclist = site.pages | sort: 'url'  %}
@@ -27,29 +29,34 @@ So here is a guide to automate it. It uses existing Jekyll only, no other depend
     </ul>
 {% endraw %}
 ```
+<br/>
+<p>
 3. Commit and push it to GitHub, and you should see an updated directory listing on index page every time you commit.
+</p>
 
-## Note
+## Notes
 Two things to take note:
 
-### First
+### HTML issue
 It can't detect .html file if it doesn't have the [front matter](https://jekyllrb.com/docs/front-matter/) inside. There are two ways to remedy it:
 - For each .html file, put `------` before the <html> tag.
-  - PRO: It retained html extension on the repository
-  - CON: Doesn't look good when loading the html locally, the `------` will still appear in the repo.
-- Change all .html file to .md extension. So it become a markdown file.
-  - PRO: No need to put `------`
-  - CON: GitHub pages will automatically use `_layout/default.html` to wrap your file code, so your `<head>` information will go missing.
-  - CON2: You have to use md extension.
+  - Good: It retained html extension on the repository
+  - Bad: Doesn't look good when you opened the html file directly, as you will see the dotted dash sticking out in the page when viewed in browser. 
+  - Bad 2: The `------` will still appear in the repo.
 
 
-So next time when u git push the repo, GitHub's Jekyll builder will automatically convert all md file (except README.md) to html, and populate the list on the repo automatically. Yay!
+- Change all .html file to .md extension so it become a markdown file. Next time when you git push the repo, GitHub's Jekyll builder will automatically convert all md file (except README.md) to html, and populate the list on the repo automatically. Yay!
+  - Good: No `------` needed.
+  - Bad: GitHub pages will automatically use `_layout/default.html` to wrap your file code, so your `<head>` information will go missing.
+  - Bad 2: You have to use md extension.
 
-### Second
-You can't track other file format aside from markdown, HTML and CSS, I’m not sure about it though.
 
-<br/>
-<br/>
 
-> Useful reference: https://jekyllrb.com/docs/variables/
+### File types
+You can't track other file format aside from markdown. I’m not sure about HTML and CSS though.
+
+---
+
+Useful reference: 
+- [https://jekyllrb.com/docs/variables/](https://jekyllrb.com/docs/variables/)
 

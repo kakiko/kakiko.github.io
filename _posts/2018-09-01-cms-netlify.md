@@ -5,6 +5,7 @@ permalink: blog/cms-netlify-jekyll-bitbucket
 ---
 This is how we intergrate Netlify CMS into an existing jekyll site. We assume we are making CMS for blog posts.
 
+## Steps
 <p>1. Read the original guide first. <a href="https://www.netlifycms.org/docs/intro/">CMS Netlify</a> provide a lot of useful informations for you to get started, but it focused on GitHub users. This guide however show you from a bitbucket user perspective.</p>
 
 <p>2. Make sure you already have your Netlify hooked to your bitbucket account. As in you can remotely push your local repository to bitbucket, and Netlify will automatically have your site build and deploy. If you have complete this step, move on!</p>
@@ -53,4 +54,5 @@ For bare minimum, fill up the name, callback url (obtain from https://www.netlif
 
 <p>10. Congratulation, you've build yourself a little wordpress. Without any database!</p>
 
-I ended up not using the CMS, because when I edit the title, the file name remained the same. A small annoyance some would say, but it turns out I can't live with that. The OCD within me got the best of me, sadly.
+## Final thoughts
+I ended up not using the CMS, because when I edit the title, the file name remained the same. A small annoyance some would say, but it turns out I can't live with that. The OCD within me got the best of me sadly.
